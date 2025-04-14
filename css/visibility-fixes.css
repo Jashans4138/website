@@ -1,0 +1,15 @@
+/* Minimal Visibility Fixes */
+body {
+    color: #000 !important;
+    background: #fff !important;
+    font-family: Arial, sans-serif !important;
+    margin: 0;
+    padding: 0;
+}
+
+main, .about-container, .about-section {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: static !important;
+}
