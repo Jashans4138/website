@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+    <header>
+        <h1>Create Your Account</h1>
+    </header>
+    <main>
+        <form class="auth-form" action="account.html" method="POST">
+            <p class="input-field">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first-name" required />
+            </p>
+            <p class="input-field">
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last-name" required />
+            </p>
+            <p class="input-field">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required />
+            </p>
+            <p class="input-field">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+            </p>
+            <p class="input-field">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+            </p>
+            <p class="input-field">
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required />
+            </p>
+            <p class="input-field">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required />
+            </p>
+            <p class="input-field">
+                <label for="profile-image">Profile Image:</label>
+                <input type="file" id="profile-image" name="profile-image" accept="image/*" />
+            </p>
+            <p class="input-field">
+                <input type="submit" value="Create Account" />
+            </p>
+        </form>
+        <div class="foot-note">
+            <p>Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Dress Store</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OUTFIX - My Account</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .account-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .profile-image-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .upload-overlay {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .upload-overlay:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+        
+        .profile-email {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .edit-profile {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--light);
+            color: var(--dark);
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .edit-profile:hover {
+            background: #ddd;
+        }
+        
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: center;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        
+        .account-content {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .account-section {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            margin-top: 0;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .order-history table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .order-history th, 
+        .order-history td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-history th {
+            background: var(--light);
+        }
+        
+        .order-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .account-nav {
+            margin-bottom: 1.5rem;
+        }
+        
+        .account-nav a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .account-nav a:hover, 
+        .account-nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>OUTFIX</h1>
+            <div class="header-nav">
+                <a href="index.html">Home</a>
+                <a href="collection.html">Collection</a>
+                <a href="about.html">About Us</a>
+                <a href="account.html" class="active">My Account</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="account-container">
+        <div class="profile-card">
+            <div class="profile-image-container">
+                <img src="images/profile-placeholder.jpg" alt="Profile Image" class="profile-image" id="profile-pic">
+                <label for="profile-upload" class="upload-overlay">
+                    <i class="fas fa-camera"></i>
+                </label>
+                <input type="file" id="profile-upload" accept="image/*" style="display: none;">
+            </div>
+            <h3 class="profile-name" id="profile-name"></h3>
+            <div class="profile-email" id="profile-email"></div>
+            <a href="#" class="edit-profile">
+                <i class="fas fa-edit"></i> Edit Profile
+            </a>
+            <button class="logout-btn" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+            
+            <div class="account-nav">
+                <a href="#" class="active"><i class="fas fa-user"></i> Profile</a>
+                <a href="#"><i class="fas fa-heart"></i> Favorites</a>
+                <a href="#"><i class="fas fa-shopping-bag"></i> Orders</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+        </div>
+        
+        <div class="account-content">
+            <div class="account-section">
+                <h3 class="section-title">My Shopping Cart</h3>
+                <div class="cart-items" id="cart-container">
+                    <div class="no-items">Your cart is empty</div>
+                </div>
+            </div>
+            
+            <div class="account-section">
+                <h3 class="section-title">My Favorites</h3>
+                <div class="favorites-grid" id="favorites-container">
+                    <div class="no-items">You haven't added any favorites yet</div>
+                </div>
+            </div>
+            
+            <div class="account-section">
+                <h3 class="section-title">Recent Orders</h3>
+                <div class="order-history">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#1001</td>
+                                <td>Oct 5, 2023</td>
+                                <td>2 items</td>
+                                <td>$89.98</td>
+                                <td><span class="order-status status-completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>#992</td>
+                                <td>Sep 28, 2023</td>
+                                <td>1 item</td>
+                                <td>$49.99</td>
+                                <td><span class="order-status status-completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>#985</td>
+                                <td>Sep 20, 2023</td>
+                                <td>3 items</td>
+                                <td>$134.97</td>
+                                <td><span class="order-status status-pending">Processing</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="account-section">
+                <h3 class="section-title">Account Details</h3>
+                <div class="account-details">
+                    <div class="detail-row">
+                        <strong>Full Name:</strong> Ada Lovelace
+                    </div>
+                    <div class="detail-row">
+                        <strong>Email:</strong> ada@example.com
+                    </div>
+                    <div class="detail-row">
+                        <strong>Phone:</strong> (123) 456-7890
+                    </div>
+                    <div class="detail-row">
+                        <strong>Member Since:</strong> January 2023
+            </div>
+            <div class="checkout-section">
+                <button id="checkoutBtn" class="checkout-btn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="collection.html?category=casual">Casual Wear</a></li>
+                    <li><a href="collection.html?category=formal">Formal Attire</a></li>
+                    <li><a href="collection.html?category=party">Party Wear</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 OUTFIX. A project by Jashan & Avneet.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const profilePic = document.getElementById('profile-pic');
+            const profileUpload = document.getElementById('profile-upload');
+            const currentUser = getCurrentUser();
+            
+            // Redirect to login if not authenticated
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user data
+            document.getElementById('profile-name').textContent = currentUser.name;
+            document.getElementById('profile-email').textContent = currentUser.email;
+            
+            // Load saved profile picture from localStorage
+            const savedPic = localStorage.getItem('profilePic');
+            if (savedPic) {
+                profilePic.src = savedPic;
+            }
+            
+            // Handle profile picture upload
+            profileUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Validate image size (max 2MB)
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('Please select an image smaller than 2MB');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        profilePic.src = event.target.result;
+                        // Save to localStorage
+                        localStorage.setItem('profilePic', event.target.result);
+                        // Show success message
+                        alert('Profile picture updated successfully!');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Click profile image to trigger file input
+            profilePic.addEventListener('click', function() {
+                profileUpload.click();
+            });
+
+            // Logout functionality
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to logout?')) {
+                    logoutUser();
+                    window.location.href = 'index.html';
+                }
+            });
+        });
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>
